@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="glitch-text">NGO Dashboard</h1>
+
+        <!-- NGO Profile Information -->
+        <div class="profile-section">
+            <h2>{{ ngo.name }}</h2>
+            <p><strong>Point of Contact:</strong> {{ ngo.contact_name }} ({{ ngo.email }})</p>
+            <p><strong>Phone:</strong> {{ ngo.phone }}</p>
+            <p><strong>Locality:</strong> {{ ngo.city }}, {{ ngo.state }}, {{ ngo.country }}</p>
+            <p><strong>Website:</strong> <a href="{{ ngo.website }}" target="_blank">{{ ngo.website }}</a></p>
+            <p><strong>Causes Supported:</strong> {{ ngo.causes }}</p>
+            <p><strong>Operational Scale:</strong> {{ ngo.operational_scale }}</p>
+        </div>
+
+        <!-- Upload Event Button -->
+        <a href="{{ url_for('upload_event') }}" class="btn">Upload an Event</a>
+
+        <!-- Search for Companies Button -->
+        <a href="{{ url_for('search_companies') }}" class="btn">Search for Companies</a>
+
+        <!-- Match with Random Company Button -->
+        <a href="{{ url_for('match_company') }}" class="btn">Match with Random Company</a>
+
+        <!-- Upcoming Events -->
+        <div class="events-section">
+            <h2>Upcoming Events</h2>
+            {% if upcoming_events %}
+                <ul>
+                    {% for event in upcoming_events %}
+                        <li>
+                            <strong>{{ event.event_name }}</strong><br>
+                            Date: {{ event.event_date }}<br>
+                            Budget: {{ event.budget }}<br>
+                            Volunteers Required: {{ event.volunteers_required }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">Currently, no upcoming events.</p>
+            {% endif %}
+        </div>
+
+        <!-- Hosted Events -->
+        <div class="events-section">
+            <h2>Hosted Events</h2>
+            {% if hosted_events %}
+                <ul>
+                    {% for event in hosted_events %}
+                        <li>
+                            <strong>{{ event.event_name }}</strong><br>
+                            Date: {{ event.event_date }}<br>
+                            Budget: {{ event.budget }}<br>
+                            Volunteers Required: {{ event.volunteers_required }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">No hosted events yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

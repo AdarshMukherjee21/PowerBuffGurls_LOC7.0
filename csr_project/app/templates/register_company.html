@@ -7,18 +7,80 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Company Signup</h1>
-        <form>
-            <label for="company_name">Company Name:</label>
-            <input type="text" id="company_name" name="company_name" required>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Sign Up</button>
-        </form>
-        <p>Already have an account? <a href="{{ url_for('login_company') }}">Login here</a></p>
-    </div>
+    <h1>Company Signup</h1>
+    <form method="POST" action="{{ url_for('register_company') }}">
+        <label for="company_name">Company Name:</label>
+        <input type="text" id="company_name" name="company_name" required>
+
+        <label for="sector">Sector:</label>
+        <input type="text" id="sector" name="sector" required>
+
+        <label for="contact_name">Point of Contact Name:</label>
+        <input type="text" id="contact_name" name="contact_name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="location">Locality (City, State, Country):</label>
+        <input type="text" id="location" name="location" required>
+
+        <label for="website">Website Link:</label>
+        <input type="url" id="website" name="website">
+
+        <h2>CSR Preferences</h2>
+        <label for="causes">Causes Supported:</label>
+        <input type="text" id="causes" name="causes" required>
+
+        <label for="max_distance">Max Distance Willing to Work (in km):</label>
+        <input type="number" id="max_distance" name="max_distance" required>
+
+        <label for="ngo_type">Preferred NGO Type:</label>
+        <select id="ngo_type" name="ngo_type">
+            <option value="large">Large</option>
+            <option value="grassroots">Grassroots</option>
+            <option value="social_enterprise">Social Enterprise</option>
+        </select>
+
+        <label for="support_type">Preferred Support Type:</label>
+        <select id="support_type" name="support_type" multiple>
+            <option value="monetary">Monetary</option>
+            <option value="volunteer">Volunteer Work</option>
+            <option value="infrastructure">Infrastructure</option>
+            <option value="skill_based">Skill-based Support</option>
+        </select>
+
+        <label for="past_projects">Past CSR Projects:</label>
+        <textarea id="past_projects" name="past_projects"></textarea>
+
+        <h2>Financial & Capacity Details</h2>
+        <label for="budget">CSR Budget (in rupees):</label>
+        <input type="number" id="budget" name="budget" required>
+
+        <label for="tax_bracket">Tax Bracket (percent):</label>
+        <input type="text" id="tax_bracket" name="tax_bracket" required>
+
+        <label for="company_size">Company Size (people):</label>
+        <input type="text" id="company_size" name="company_size" required>
+
+        <h2>Operational Preferences</h2>
+        <label for="communication_method">Preferred Communication Method:</label>
+        <select id="communication_method" name="communication_method">
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+            <option value="meetings">Meetings</option>
+        </select>
+
+        <label for="availability">Availability for Volunteering (number of people):</label>
+        <input type="text" id="availability" name="availability" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="{{ url_for('login_company') }}">Login here</a></p>
 </body>
 </html>
