@@ -21,14 +21,11 @@
             <p><strong>Operational Scale:</strong> {{ ngo.operational_scale }}</p>
         </div>
 
-        <!-- Upload Event Button -->
+        <!-- Buttons -->
         <a href="{{ url_for('upload_event') }}" class="btn">Upload an Event</a>
-
-        <!-- Search for Companies Button -->
         <a href="{{ url_for('search_companies') }}" class="btn">Search for Companies</a>
-
-        <!-- Match with Random Company Button -->
         <a href="{{ url_for('match_company') }}" class="btn">Match with Random Company</a>
+        <a href="{{ url_for('ngo_friends') }}" class="btn">View Friends</a> <!-- NEW: View Friends Button -->
 
         <!-- Upcoming Events -->
         <div class="events-section">
@@ -37,10 +34,9 @@
                 <ul>
                     {% for event in upcoming_events %}
                         <li>
-                            <strong>{{ event.event_name }}</strong><br>
-                            Date: {{ event.event_date }}<br>
-                            Budget: {{ event.budget }}<br>
-                            Volunteers Required: {{ event.volunteers_required }}
+                            <a href="{{ url_for('view_event', event_name=event.event_name) }}" class="btn">
+                                {{ event.event_name }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -56,10 +52,9 @@
                 <ul>
                     {% for event in hosted_events %}
                         <li>
-                            <strong>{{ event.event_name }}</strong><br>
-                            Date: {{ event.event_date }}<br>
-                            Budget: {{ event.budget }}<br>
-                            Volunteers Required: {{ event.volunteers_required }}
+                            <a href="{{ url_for('view_event', event_name=event.event_name) }}" class="btn">
+                                {{ event.event_name }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
@@ -70,3 +65,5 @@
     </div>
 </body>
 </html>
+
+

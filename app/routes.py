@@ -246,6 +246,56 @@ def dashboard_ngo():
         hosted_events=hosted_events
     )
 
+@app.route('/ngo_friends')
+def ngo_friends():
+    if "ngo_email" not in session:
+        flash("Please log in first!", "error")
+        return redirect(url_for("login_ngo"))
+
+    ngo_email = session["ngo_email"]
+    ngo = db.ngos.find_one({"email": ngo_email})
+
+    if not ngo:
+        flash("NGO profile not found!", "error")
+        return redirect(url_for("login_ngo"))
+
+    # Get friends and requests (default empty lists if missing)
+    current_friends = ngo.get("friends", [])
+    friend_requests = ngo.get("friend_requests", [])
+
+    return render_template(
+        "ngo_friends.html",
+        ngo=ngo,
+        current_friends=current_friends,
+        friend_requests=friend_requests
+    )
+
+@app.route('/accept_friend_request/<company_email>', methods=['POST'])
+def accept_friend_request(company_email):
+    if "ngo_email" not in session:
+        flash("Please log in first!", "error")
+        return redirect(url_for("login_ngo"))
+
+    ngo_email = session["ngo_email"]
+    ngo = db.ngos.find_one({"email": ngo_email})
+
+    if not ngo:
+        flash("NGO profile not found!", "error")
+        return redirect(url_for("login_ngo"))
+
+    if "friend_requests" in ngo and company_email in ngo["friend_requests"]:
+        # Remove from friend requests and add to friends
+        db.ngos.update_one(
+            {"email": ngo_email},
+            {
+                "$pull": {"friend_requests": company_email},
+                "$push": {"friends": company_email}
+            }
+        )
+        flash("Friend request accepted!", "success")
+
+    return redirect(url_for("ngo_friends"))
+
 @app.route('/upload_event', methods=['GET', 'POST'])
 def upload_event():
     if "ngo_email" not in session:
@@ -328,8 +378,14 @@ def dashboard_company():
 
 @app.route('/search_ngos', methods=['GET', 'POST'])
 def search_ngos():
-    # Functionality to search for NGOs will be implemented here
-    return render_template("search_ngos.html")
+    ngos = []
+    
+    if request.method == "POST":
+        search_query = request.form.get("search_query", "").strip()
+        if search_query:
+            ngos = list(db.ngos.find({"ngo_name": {"$regex": search_query, "$options": "i"}}))
+
+    return render_template("search_ngos.html", ngos=ngos)
 
 
 
@@ -426,6 +482,46 @@ def like_company():
 
     return jsonify({"status": "liked"})
 
+
+
+# from flask import render_template, request, redirect, url_for, session
+from bson.objectid import ObjectId
+# from app import app, db
+
+@app.route('/event/<event_name>', methods=['GET', 'POST'])
+def view_event(event_name):
+    if "ngo_email" not in session:
+        return redirect(url_for("login_ngo"))
+
+    # Find the NGO document that contains the event
+    ngo = db.ngos.find_one({"events.event_name": event_name})
+    
+    if not ngo:
+        return "Event not found!", 404
+
+    # Extract the event from the list
+    event = next((e for e in ngo["events"] if e["event_name"] == event_name), None)
+
+    if request.method == "POST" and event:
+        updated_data = {
+            "event_description": request.form["event_description"],
+            "budget": request.form["budget"],
+            "volunteers_required": request.form["volunteers_required"]
+        }
+
+        # Update event in the NGO document
+        db.ngos.update_one(
+            {"_id": ngo["_id"], "events.event_name": event_name},
+            {"$set": {
+                "events.$.event_description": updated_data["event_description"],
+                "events.$.budget": updated_data["budget"],
+                "events.$.volunteers_required": updated_data["volunteers_required"]
+            }}
+        )
+        
+        return redirect(url_for('view_event', event_name=event_name))
+
+    return render_template("event_details.html", event=event)
 
 
 

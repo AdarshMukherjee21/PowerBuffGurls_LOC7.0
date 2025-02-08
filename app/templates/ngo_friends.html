@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Company Friends</h2>
+
+<!-- Friend Requests -->
+<div class="friends-section">
+    <h3>Friend Requests</h3>
+    {% if friend_requests %}
+        <ul>
+            {% for company in friend_requests %}
+                <li>
+                    {{ company }}
+                    <form action="{{ url_for('accept_friend_request', company_email=company) }}" method="POST">
+                        <button type="submit">Accept</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No friend requests.</p>
+    {% endif %}
+</div>
+
+<!-- Current Friends -->
+<div class="friends-section">
+    <h3>Current Friends</h3>
+    {% if current_friends %}
+        <ul>
+            {% for company in current_friends %}
+                <li>{{ company }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="error">No friends, stupid!</p>
+    {% endif %}
+</div>
+
+{% endblock %}

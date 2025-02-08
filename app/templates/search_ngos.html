@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Search NGOs</h2>
+
+<!-- Search Form -->
+<form method="POST">
+    <input type="text" name="search_query" placeholder="Search NGOs by name..." required>
+    <button type="submit">Search</button>
+</form>
+
+<!-- Display Results -->
+{% if ngos %}
+    <h3>Search Results:</h3>
+    <ul>
+        {% for ngo in ngos %}
+            <li>
+                <strong>{{ ngo.ngo_name }}</strong> - {{ ngo.locality }}
+                <br>
+                <a href="{{ ngo.website }}" target="_blank">Visit Website</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% elif request.method == "POST" %}
+    <p>No NGOs found matching your search.</p>
+{% endif %}
+
+{% endblock %}
