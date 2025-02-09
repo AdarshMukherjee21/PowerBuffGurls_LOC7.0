@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSR Portal - Tax Calculator</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i data-lucide="heart" class="nav-icon"></i>
+                <span>CSR Portal</span>
+            </div>
+            <div class="nav-actions">
+                <img 
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+                    alt="User" 
+                    class="avatar"
+                >
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="/" class="sidebar-link">
+                    <i data-lucide="layout-dashboard"></i>
+                    Dashboard
+                </a>
+                <a href="/campaigns" class="sidebar-link">
+                    <i data-lucide="users"></i>
+                    Campaigns
+                </a>
+                <a href="/financial_reports" class="sidebar-link">
+                    <i data-lucide="file-spreadsheet"></i>
+                    Financial Reports
+                </a>
+                <a href="/tax_calculator" class="sidebar-link active">
+                    <i data-lucide="calculator"></i>
+                    Tax Calculator
+                </a>
+                <a href="#" class="sidebar-link">
+                    <i data-lucide="pie-chart"></i>
+                    Impact Analytics
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="tax-header">
+                <div>
+                    <h1>Tax Benefits Calculator</h1>
+                    <p class="text-secondary">Calculate tax benefits from your CSR contributions</p>
+                </div>
+                <button id="exportTaxReportBtn" class="btn btn-primary">
+                    <i data-lucide="download"></i>
+                    Export Tax Report
+                </button>
+            </div>
+
+            <!-- Tax Benefits Summary -->
+            <div class="tax-summary">
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <i data-lucide="landmark"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h3>Total CSR Contributions</h3>
+                        <p class="summary-amount" id="totalContributions">₹0</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <i data-lucide="check-circle"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h3>Eligible Deductions</h3>
+                        <p class="summary-amount" id="eligibleDeductions">₹0</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <i data-lucide="piggy-bank"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h3>Estimated Tax Savings</h3>
+                        <p class="summary-amount" id="estimatedSavings">₹0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tax Information -->
+            <div class="tax-info-section">
+                <h2>Tax Benefit Details</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Section 80G Benefits</h3>
+                        <p>Under Section 80G of the Income Tax Act, companies can claim up to 50% deduction on qualifying CSR contributions.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Qualifying Causes</h3>
+                        <ul>
+                            <li>Education</li>
+                            <li>Healthcare</li>
+                            <li>Environment</li>
+                            <li>Poverty Alleviation</li>
+                            <li>Rural Development</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>Important Notes</h3>
+                        <ul>
+                            <li>Contributions must be made to registered organizations</li>
+                            <li>Proper documentation is required</li>
+                            <li>Benefits are subject to annual limits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/tax_calculator.js"></script>
+</body>
+</html>

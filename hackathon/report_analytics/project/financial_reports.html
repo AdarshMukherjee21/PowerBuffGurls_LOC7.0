@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSR Portal - Financial Reports</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i data-lucide="heart" class="nav-icon"></i>
+        <span>CSR Portal</span>
+      </div>
+      <div class="nav-actions">
+        <img 
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+          alt="User" 
+          class="avatar"
+        >
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <a href="/" class="sidebar-link">
+          <i data-lucide="layout-dashboard"></i>
+          Dashboard
+        </a>
+        <a href="/campaigns.html" class="sidebar-link">
+          <i data-lucide="users"></i>
+          Campaigns
+        </a>
+        <a href="/financial_reports.html" class="sidebar-link active">
+          <i data-lucide="file-spreadsheet"></i>
+          Financial Reports
+        </a>
+        <a href="#" class="sidebar-link">
+          <i data-lucide="calculator"></i>
+          Tax Calculator
+        </a>
+        <a href="#" class="sidebar-link">
+          <i data-lucide="pie-chart"></i>
+          Impact Analytics
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="reports-header">
+        <div>
+          <h1>Financial Reports</h1>
+          <p class="text-secondary">Track and analyze all CSR financial transactions</p>
+        </div>
+        <button id="exportReportBtn" class="btn btn-primary">
+          <i data-lucide="download"></i>
+          Export Report
+        </button>
+      </div>
+
+      <!-- Financial Summary -->
+      <div class="financial-summary">
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i data-lucide="wallet"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Total Funds Received</h3>
+            <p class="summary-amount" id="totalFunds">₹0</p>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i data-lucide="landmark"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Funds Allocated</h3>
+            <p class="summary-amount" id="allocatedFunds">₹0</p>
+          </div>
+        </div>
+
+        <div class="summary-card">
+          <div class="summary-icon">
+            <i data-lucide="hourglass"></i>
+          </div>
+          <div class="summary-content">
+            <h3>Pending Distribution</h3>
+            <p class="summary-amount" id="pendingFunds">₹0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions Table -->
+      <div class="transactions-section">
+        <div class="table-header">
+          <h2>Transaction History</h2>
+          <div class="table-actions">
+            <div class="search-box">
+              <i data-lucide="search"></i>
+              <input type="text" id="searchTransactions" placeholder="Search transactions...">
+            </div>
+            <select id="typeFilter">
+              <option value="">All Types</option>
+              <option value="Donation">Donations</option>
+              <option value="Allocation">Allocations</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="transactions-table">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Campaign</th>
+                <th>Donor Name</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="transactionsBody">
+              <!-- Transactions will be inserted here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="financial_reports.js"></script>
+</body>
+</html>

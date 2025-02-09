@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSR Portal - Campaigns</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i data-lucide="heart" class="nav-icon"></i>
+        <span>CSR Portal</span>
+      </div>
+      <div class="nav-actions">
+        <button id="createCampaignBtn" class="btn btn-primary">Create Campaign</button>
+        <img 
+          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+          alt="User" 
+          class="avatar"
+        >
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <a href="/" class="sidebar-link">
+          <i data-lucide="layout-dashboard"></i>
+          Dashboard
+        </a>
+        <a href="/campaigns.html" class="sidebar-link active">
+          <i data-lucide="users"></i>
+          Campaigns
+        </a>
+        <a href="#" class="sidebar-link">
+          <i data-lucide="file-spreadsheet"></i>
+          Financial Reports
+        </a>
+        <a href="#" class="sidebar-link">
+          <i data-lucide="calculator"></i>
+          Tax Calculator
+        </a>
+        <a href="#" class="sidebar-link">
+          <i data-lucide="pie-chart"></i>
+          Impact Analytics
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <div class="campaigns-header">
+        <div>
+          <h1>CSR Campaigns</h1>
+          <p class="text-secondary">Manage and track all corporate social responsibility campaigns</p>
+        </div>
+        <button id="createCampaignBtn" class="btn btn-primary">
+          <i data-lucide="plus"></i>
+          Create Campaign
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters">
+        <div class="search-box">
+          <i data-lucide="search"></i>
+          <input type="text" id="searchInput" placeholder="Search campaigns...">
+        </div>
+        <div class="filter-group">
+          <select id="causeFilter">
+            <option value="">All Causes</option>
+            <option value="Education">Education</option>
+            <option value="Environment">Environment</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Poverty">Poverty</option>
+          </select>
+          <select id="statusFilter">
+            <option value="">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Campaigns List -->
+      <div class="campaigns-list" id="campaignsList">
+        <!-- Campaign cards will be inserted here by JavaScript -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Create Campaign Modal -->
+  <div id="createCampaignModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create Campaign</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <form id="campaignForm" class="modal-body">
+        <div class="form-group">
+          <label for="companyName">Company Name</label>
+          <input type="text" id="companyName" name="company_name" required>
+        </div>
+        <div class="form-group">
+          <label for="title">Campaign Title</label>
+          <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+          <label for="cause">Cause</label>
+          <select id="cause" name="cause" required>
+            <option value="">Select a cause</option>
+            <option value="Education">Education</option>
+            <option value="Environment">Environment</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Poverty">Poverty</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="goalAmount">Goal Amount (₹)</label>
+          <input type="number" id="goalAmount" name="goal_amount" required>
+        </div>
+        <div class="form-group">
+          <label for="startDate">Start Date</label>
+          <input type="date" id="startDate" name="start_date" required>
+        </div>
+        <div class="form-group">
+          <label for="endDate">End Date</label>
+          <input type="date" id="endDate" name="end_date" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" required></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create Campaign</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Donate Modal -->
+  <div id="donateModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Make a Donation</h2>
+        <button class="close-btn">&times;</button>
+      </div>
+      <form id="donateForm" class="modal-body">
+        <input type="hidden" id="campaignId" name="campaign_id">
+        <div class="form-group">
+          <label for="donorName">Donor Name</label>
+          <input type="text" id="donorName" name="donor_name" required>
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount (₹)</label>
+          <input type="number" id="amount" name="amount" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Donate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/campaigns.js"></script>
+</body>
+</html>

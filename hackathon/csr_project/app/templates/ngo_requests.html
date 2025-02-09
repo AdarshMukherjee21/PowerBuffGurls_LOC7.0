@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Pending Friend Requests</h2>
+
+{% if requests %}
+    <ul>
+        {% for req in requests %}
+            <li>
+                <strong>{{ req.company_name }}</strong>
+                <form action="{{ url_for('accept_friend_request', company_id=req.company_id) }}" method="POST">
+                    <button type="submit">Accept</button>
+                </form>
+                <form action="{{ url_for('reject_friend_request', company_id=req.company_id) }}" method="POST">
+                    <button type="submit">Reject</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No pending requests.</p>
+{% endif %}
+
+{% endblock %}
+

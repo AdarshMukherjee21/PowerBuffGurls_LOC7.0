@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Companies for Event</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Match Companies for {{ event_name }}</h1>
+    <div id="company-info">
+        <p>Loading...</p>
+    </div>
+    <button id="like">Like</button>
+    <button id="skip">Skip</button>
+
+    <script>
+        function loadNextCompany() {
+            $.get("/next_company_for_event/{{ event_name }}", function(data) {
+                if (data.status === "done") {
+                    $("#company-info").html("<p>No more matches available.</p>");
+                    $("#like, #skip").hide();
+                } else {
+                    $("#company-info").html(`
+                        <h2>${data.company.company_name}</h2>
+                        <p>Sector: ${data.company.sector}</p>
+                        <p>Location: ${data.company.location}</p>
+                        <p>Score: ${data.score.toFixed(2)}</p>
+                    `);
+                }
+            });
+        }
+
+        $("#like").click(function() {
+            let companyName = $("#company-info h2").text();
+            $.post("/like_company_for_event/{{ event_name }}", JSON.stringify({ company_name: companyName }), function() {
+                loadNextCompany();
+            }, "json");
+        });
+
+        $("#skip").click(function() {
+            loadNextCompany();
+        });
+
+        $(document).ready(function() {
+            loadNextCompany();
+        });
+    </script>
+</body>
+</html>

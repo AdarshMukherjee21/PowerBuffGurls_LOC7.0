@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSR Portal - Impact Analytics</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://unpkg.com/lucide-icons/dist/umd/lucide.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i data-lucide="heart" class="nav-icon"></i>
+                <span>CSR Portal</span>
+            </div>
+            <div class="nav-actions">
+                <img 
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+                    alt="User" 
+                    class="avatar"
+                >
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="/" class="sidebar-link">
+                    <i data-lucide="layout-dashboard"></i>
+                    Dashboard
+                </a>
+                <a href="/campaigns" class="sidebar-link">
+                    <i data-lucide="users"></i>
+                    Campaigns
+                </a>
+                <a href="/financial_reports" class="sidebar-link">
+                    <i data-lucide="file-spreadsheet"></i>
+                    Financial Reports
+                </a>
+                <a href="/tax_calculator" class="sidebar-link">
+                    <i data-lucide="calculator"></i>
+                    Tax Calculator
+                </a>
+                <a href="/impact_analytics" class="sidebar-link active">
+                    <i data-lucide="pie-chart"></i>
+                    Impact Analytics
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="impact-header">
+                <div>
+                    <h1>Impact Analytics</h1>
+                    <p class="text-secondary">Track and analyze the social impact of your CSR initiatives</p>
+                </div>
+                <button id="exportImpactReportBtn" class="btn btn-primary">
+                    <i data-lucide="download"></i>
+                    Export Impact Report
+                </button>
+            </div>
+
+            <!-- Impact Summary -->
+            <div class="impact-summary">
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h3>Lives Impacted</h3>
+                        <p class="summary-amount" id="totalLivesImpacted">0</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <i data-lucide="clock"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h3>Volunteer Hours</h3>
+                        <p class="summary-amount" id="volunteerHours">0</p>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-icon">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="summary-content">
+                        <h3>Average Impact per ₹</h3>
+                        <p class="summary-amount" id="avgImpact">₹0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Distribution -->
+            <div class="resources-section">
+                <h2>Resources Distribution</h2>
+                <div class="resources-grid" id="resourcesList">
+                    <!-- Resources will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- SROI Analysis -->
+            <div class="sroi-section">
+                <h2>Social Return on Investment (SROI)</h2>
+                <div class="sroi-card">
+                    <div class="sroi-header">
+                        <h3>SROI Ratio</h3>
+                        <p id="sroiRatio" class="sroi-value">0:1</p>
+                    </div>
+                    <p class="sroi-description">
+                        For every rupee invested in CSR initiatives, this is the estimated social value generated
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/impact_analytics.js"></script>
+</body>
+</html>

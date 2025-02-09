@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update {{ event.event_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Update {{ event.event_name }}</h1>
+
+        <form method="POST">
+            <label for="event_description">Event Description:</label>
+            <textarea id="event_description" name="event_description" rows="4" cols="50" required>{{ event.event_description }}</textarea><br><br>
+
+            <label for="budget">Budget:</label>
+            <input type="number" id="budget" name="budget" value="{{ event.budget }}" required><br><br>
+
+            <label for="volunteers_required">Volunteers Required:</label>
+            <input type="number" id="volunteers_required" name="volunteers_required" value="{{ event.volunteers_required }}" required><br><br>
+
+            <button type="submit" class="btn">Update Event</button>
+        </form>
+
+        <a href="{{ url_for('view_event', event_name=event.event_name) }}" class="btn">Back to Event Details</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CSR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="crt-overlay"></div>
+    
+    <header class="sticky-header">
+        <div class="logo">
+            <div class="pixel-art-globe"></div>
+            <h1>Corporate Social Responsibility (CSR)</h1>
+        </div>
+        <nav>
+            <button class="retro-btn" onclick="location.href='register'">Register</button>
+            <button class="retro-btn" onclick="location.href='login'">Sign In</button>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h2 class="glitch">What is CSR?</h2>
+            <p class="typewriter">Corporate Social Responsibility (CSR) is the practice of businesses taking responsibility for their social and environmental impact...</p>
+        </section>
+        
+        <section class="features">
+            <h2>Why is CSR Important?</h2>
+            <ul class="pixel-list">
+                <li><strong>Consumer Trust & Loyalty:</strong> 40% of consumers prefer brands that align with their values.</li>
+                <li><strong>Employee Engagement:</strong> 70% of millennials consider a company’s commitment to community.</li>
+                <li><strong>Increased Profitability:</strong> Companies with CSR can boost profits by up to 81%.</li>
+                <li><strong>Sustainability & Risk Management:</strong> CSR reduces legal risks and enhances reputation.</li>
+            </ul>
+        </section>
+        
+        <section class="feature-grid">
+            <h2>Our Mission</h2>
+            <p>We help NGOs connect with companies that share their vision for a better world.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 CSR Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>

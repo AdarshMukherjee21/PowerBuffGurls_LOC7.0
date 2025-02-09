@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Signup Portal</h1>
+        <div class="buttons">
+            <a href="{{ url_for('company_signup') }}" class="btn">Company Signup</a>
+            <a href="{{ url_for('ngo_signup') }}" class="btn">NGO Signup</a>
+        </div>
+        <div class="login-links">
+            <p>Already have an account? <a href="{{ url_for('company_login') }}">Company Login</a> or <a href="{{ url_for('ngo_login') }}">NGO Login</a></p>
+        </div>
+    </div>
+</body>
+</html>

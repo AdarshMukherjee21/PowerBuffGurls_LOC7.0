@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="glitch-text">NGO Dashboard</h1>
+
+        <!-- NGO Profile Information -->
+        <div class="profile-section">
+            <h2>{{ ngo.name }}</h2>
+            <p><strong>Point of Contact:</strong> {{ ngo.contact_name }} ({{ ngo.email }})</p>
+            <p><strong>Phone:</strong> {{ ngo.phone }}</p>
+            <p><strong>Locality:</strong> {{ ngo.city }}, {{ ngo.state }}, {{ ngo.country }}</p>
+            <p><strong>Website:</strong> <a href="{{ ngo.website }}" target="_blank">{{ ngo.website }}</a></p>
+            <p><strong>Causes Supported:</strong> {{ ngo.causes }}</p>
+            <p><strong>Operational Scale:</strong> {{ ngo.operational_scale }}</p>
+        </div>
+
+        <!-- Buttons -->
+        <a href="{{ url_for('upload_event') }}" class="btn">Upload an Event</a>
+        <a href="{{ url_for('search_companies') }}" class="btn">Search for Companies</a>
+        <a href="{{ url_for('match_company') }}" class="btn">Match with Random Company</a>
+
+        <!-- Friend Requests -->
+        <div class="friend-section">
+            <h2>Friend Requests</h2>
+            {% if friend_requests %}
+                <ul>
+                    {% for request in friend_requests %}
+                        <li>
+                            <strong>{{ request.ngo_name }}</strong> wants to connect.
+                            <form action="{{ url_for('accept_request', request_id=request._id) }}" method="POST">
+                                <button type="submit" class="btn">Accept</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">No friend requests.</p>
+            {% endif %}
+        </div>
+
+        <!-- Friends List -->
+        <div class="friend-section">
+            <h2>Friends</h2>
+            {% if friends %}
+                <ul>
+                    {% for friend in friends %}
+                        <li>
+                            <strong>{{ friend }}</strong> 
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">No friends yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Upcoming Events -->
+        <div class="events-section">
+            <h2>Upcoming Events</h2>
+            {% if upcoming_events %}
+                <ul>
+                    {% for event in upcoming_events %}
+                        <li>
+                            <a href="{{ url_for('view_event', event_name=event.event_name) }}" class="btn">
+                                {{ event.event_name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">Currently, no upcoming events.</p>
+            {% endif %}
+        </div>
+
+        <!-- Hosted Events -->
+        <div class="events-section">
+            <h2>Hosted Events</h2>
+            {% if hosted_events %}
+                <ul>
+                    {% for event in hosted_events %}
+                        <li>
+                            <a href="{{ url_for('view_event', event_name=event.event_name) }}" class="btn">
+                                {{ event.event_name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">No hosted events yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

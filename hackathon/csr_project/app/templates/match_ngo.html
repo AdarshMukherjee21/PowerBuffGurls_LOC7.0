@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Matching</title>
+    <!-- Inline CSS -->
+    <style>
+        /* Retro Gaming Theme */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        body {
+            background-color: #1a1a2e;
+            color: #00ff00;
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 4px solid #00ff00;
+            background-color: #000000;
+            box-shadow: 0px 0px 10px #00ff00;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-shadow: 3px 3px 0px #ff0000;
+        }
+
+        h2 {
+            font-size: 18px;
+            text-shadow: 2px 2px 0px #ffcc00;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #00ff00;
+            background-color: #222;
+            color: #00ff00;
+            font-family: 'Press Start 2P', cursive;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        button {
+            background-color: #ff0000;
+            color: white;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+            margin-top: 20px;
+            box-shadow: 4px 4px 0px #00ff00;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #ff9900;
+            box-shadow: 4px 4px 0px #ff0000;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #ff0000;
+            color: white;
+            padding: 10px 15px;
+            margin: 10px;
+            border: 3px solid #00ff00;
+            box-shadow: 4px 4px 0px #00ff00;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #ff9900;
+            box-shadow: 4px 4px 0px #ff0000;
+        }
+
+        /* Flash Messages */
+        .success {
+            color: #00ff00;
+            background: #222;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #00ff00;
+        }
+
+        .error {
+            color: #ff0000;
+            background: #222;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #ff0000;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            margin-top: 20px;
+        }
+
+        .nav-links a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .nav-links a:hover {
+            color: #ff0000;
+            text-decoration: underline;
+        }
+
+        /* Centering the form */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Retro Border Animation */
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px 0px #ff0000; }
+            50% { text-shadow: -2px -2px 0px #00ff00; }
+            100% { text-shadow: 2px 2px 0px #ff0000; }
+        }
+
+        .glitch-text {
+            animation: glitch 0.3s infinite alternate;
+        }
+
+        /* Loading Screen Effect */
+        .loading {
+            font-size: 18px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 0px #ff0000;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="ngo-info">
+        <!-- This is where the NGO details will be displayed -->
+    </div>
+    <div id="csr-score">
+        <!-- CSR score will be displayed here -->
+    </div>
+    <div id="partnership-insights">
+        <!-- Insights will be displayed after a delay -->
+    </div>
+
+    <button id="like">Like</button>
+    <button id="skip">Skip</button>
+
+    <script>
+        function loadNextNGO() {
+            console.log("Loading next NGO...");
+            $.get("/next_ngo", function(data) {
+                console.log("Data received from /next_ngo:", data);  // Debugging the response
+
+                if (data.status === "done") {
+                    $("#ngo-info").html("<p>No more matches available.</p>");
+                    $("#like, #skip").hide();
+                    console.log("No more matches available.");
+                } else {
+                    // Show basic NGO information immediately
+                    $("#ngo-info").html(`
+                        <h2>${data.ngo.ngo_name}</h2>
+                        <p>Location: ${data.ngo.locality}</p>
+                        <p>Causes: ${data.ngo.causes}</p>
+                    `);
+                    $("#csr-score").text(data.score.toFixed(2));  // Display CSR score
+                    console.log("CSR score displayed:", data.score.toFixed(2));
+
+                    // Simulate a delay (e.g., 5 seconds) for the insights
+                    setTimeout(function() {
+                        $("#partnership-insights").text(data.insights);  // Display partnership insights
+                        console.log("Insights displayed:", data.insights);  // Debugging insights
+                    }, 5000);  // 5 seconds delay for insights
+                }
+            }).fail(function(xhr, status, error) {
+                console.error("AJAX request failed:", status, error);  // Log if the AJAX request fails
+            });
+        }
+
+        // Like or skip functionality
+        $("#like").click(function() {
+            let company_email = sessionStorage.getItem("company_email");
+            let ngoEmail = "ngo1@example.com";  // Update dynamically if needed
+
+            if (!company_email) {
+                console.error("Company is not logged in!");
+                return;
+            }
+
+            $.ajax({
+                url: "/like_ngo",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    company_email: company_email,
+                    ngo_email: ngoEmail
+                }),
+                success: function(response) {
+                    console.log("Success:", response);  // Log success response
+                    loadNextNGO();  // Load the next NGO after liking
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", xhr.responseText);  // Log error if request fails
+                }
+            });
+        });
+
+        $("#skip").click(function() {
+            console.log("Skipping NGO...");
+            loadNextNGO();
+        });
+
+        $(document).ready(function() {
+            console.log("Document ready. Loading next NGO...");
+            loadNextNGO();  // Call to load the first NGO
+        });
+    </script>
+</body>
+</html>
