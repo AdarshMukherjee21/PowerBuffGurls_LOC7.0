@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match NGOs</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .container {
+            width: 50%;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NGO Matching</h1>
+        <div id="ngo-info">
+            <p>Loading...</p>
+        </div>
+        <button id="like">Like</button>
+        <button id="skip">Skip</button>
+    </div>
+
+    <script>
+        function loadNextNGO() {
+            $.get("/next_ngo", function(data) {
+                if (data.status === "done") {
+                    $("#ngo-info").html("<p>No more matches available.</p>");
+                    $("#like, #skip").hide();
+                } else {
+                    $("#ngo-info").html(`
+                        <h2>${data.ngo.ngo_name}</h2>
+                        <p>Location: ${data.ngo.locality}</p>
+                        <p>Causes: ${data.ngo.causes}</p>
+                        <p>Score: ${data.score.toFixed(2)}</p>
+                    `);
+                }
+            });
+        }
+
+        $("#like").click(function() {
+            let company_email = sessionStorage.getItem("company_email");  // Get the logged-in company name from the session
+            let ngoEmail = "ngo1@example.com";  // You can dynamically get the logged-in NGO's email if needed
+
+            // Check if company name exists in the session
+            if (!companyName) {
+                console.error("Company is not logged in!");
+                return;  // Exit if company name is not found
+            }
+
+            $.ajax({
+                url: "/like_ngo",
+                type: "POST",
+                contentType: "application/json",  // Set Content-Type to JSON
+                data: JSON.stringify({
+                    company_email: company_email,  // Send the company name from session
+                    ngo_email: ngoEmail  // Send the NGO email as part of the request
+                }),
+                success: function(response) {
+                    console.log("Success:", response);
+                    loadNextCompany();  // Function to load the next company after the like
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error:", xhr.responseText);  // Log any errors
+                }
+            });
+        });
+
+
+
+        $("#skip").click(function() {
+            loadNextNGO();
+        });
+
+        $(document).ready(function() {
+            loadNextNGO();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="glitch-text">Welcome, {{ company.company_name }}!</h1>
+
+        <!-- Upcoming Events from Followed NGOs -->
+        <div class="events-section">
+            <h2>Upcoming Events from NGOs You Follow</h2>
+            {% if followed_ngos_events %}
+                <ul>
+                    {% for event in followed_ngos_events %}
+                        <li>
+                            <strong>{{ event.event_name }}</strong> (Hosted by: {{ event.ngo_host }})<br>
+                            Date: {{ event.event_date }}<br>
+                            Budget: {{ event.budget }}<br>
+                            Volunteers Required: {{ event.volunteers_required }}<br>
+                            <!-- Match with Event Button -->
+                            <a href="{{ url_for('match_event', event_name=event.event_name) }}" class="btn">Match with Event</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">You don’t follow any NGOs. <a href="{{ url_for('search_ngos') }}">Follow now</a> to see events!</p>
+            {% endif %}
+        </div>
+
+        <!-- Match with NGO -->
+        <a href="{{ url_for('match_ngo') }}" class="btn">Match with an NGO</a>
+
+        <!-- Events Participating In -->
+        <div class="events-section">
+            <h2>Events You Are Partaking In</h2>
+            {% if participating_events %}
+                <ul>
+                    {% for event in participating_events %}
+                        <li>
+                            <strong>{{ event.event_name }}</strong> (Hosted by: {{ event.ngo_host }})<br>
+                            Date: {{ event.event_date }}<br>
+                            Budget: {{ event.budget }}<br>
+                            Volunteers Required: {{ event.volunteers_required }}<br>
+                            <!-- Match with Event Button -->
+                            <a href="{{ url_for('match_event', event_name=event.event_name) }}" class="btn">Match with Event</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">You are not participating in any events yet.</p>
+            {% endif %}
+        </div>
+
+        <!-- Search for NGOs -->
+        <a href="{{ url_for('search_ngos') }}" class="btn">Search for NGOs</a>
+
+        <!-- Friend Requests Section -->
+        <!-- Friend Requests Section -->
+        <div class="friend-section">
+            <h2>Friend Requests</h2>
+            {% if friend_requests %}
+                <ul>
+                    {% for request in friend_requests %}
+                        <li>
+                            <strong>{{ request.ngo_name }}</strong> wants to connect.
+                            <!-- Button to Accept Friend Request -->
+                            <form action="{{ url_for('accept_request', request_id=request._id) }}" method="POST">
+                                <button type="submit" class="btn">Accept</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="error">No friend requests.</p>
+            {% endif %}
+        </div>
+
+
+    </div>
+</body>
+</html>

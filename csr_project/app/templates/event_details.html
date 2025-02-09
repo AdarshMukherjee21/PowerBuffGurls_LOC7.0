@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.event_name }} - Event Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ event.event_name }}</h1>
+        <p><strong>Description:</strong> {{ event.event_description }}</p>
+        <p><strong>Budget:</strong> {{ event.budget }}</p>
+        <p><strong>Volunteers Required:</strong> {{ event.volunteers_required }}</p>
+
+        <!-- Add Collaborators Button -->
+        <a href="{{ url_for('add_collaborators', event_name=event.event_name) }}" class="btn">Add Collaborators</a>
+
+        <!-- Match Companies Button -->
+       
+
+        <!-- Companies Matching Interface (Initially Hidden) -->
+        
+
+        <a href="{{ url_for('view_event', event_name=event.event_name) }}" class="btn">Back to Event Details</a>
+    </div>
+
+    <script>
+        let selectedCompanies = [];  // Store liked companies
+
+        // Show company matching interface when "Match Companies" button is clicked
+        $("#match-companies").click(function() {
+            $("#company-info").show();
+            loadNextCompany();
+        });
+
+        // Load the next company to match with
+        function loadNextCompany() {
+            $.get("/next_company_for_event/{{ event.event_name }}", function(data) {
+                if (data.status === "done") {
+                    $("#company-info").html("<p>No more companies available.</p>");
+                    $("#like, #skip").hide();
+                } else {
+                    $("#company-details").html(`
+                        <h2>${data.company.company_name}</h2>
+                        <p>Sector: ${data.company.sector}</p>
+                        <p>Location: ${data.company.location}</p>
+                        <p>Score: ${data.score.toFixed(2)}</p>
+                    `);
+                }
+            });
+        }
+
+        // Like a company and add to the list of collaborators
+        $("#like").click(function() {
+            let companyName = $("#company-details h2").text();
+            selectedCompanies.push(companyName);
+
+            // Display selected companies
+            alert(`You liked ${companyName}!`);
+
+            loadNextCompany();  // Load the next company
+        });
+
+        // Skip the current company
+        $("#skip").click(function() {
+            loadNextCompany();  // Load the next company without liking
+        });
+    </script>
+</body>
+</html>
